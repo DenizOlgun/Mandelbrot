@@ -39,7 +39,7 @@ public class Main extends Application {
                         getColor(Color.BLACK,
                                 mandelbrot.apply(coordinateMapper.apply(new Point<Integer>(readX, readY))),
                                 (Integer iterations) -> iterations == 0,
-                                (Integer iterations) -> new Color((iterations/MAX_ITERATIONS), 0, 0, 0.75),
+                                (Integer iterations) -> new Color(((double) iterations/MAX_ITERATIONS), 0, 0, 0.75),
                                 (Color c) -> new Color(c.getRed(), c.getBlue(), c.getGreen(), c.getOpacity())));
             }
         }
