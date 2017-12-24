@@ -63,7 +63,6 @@ public class Main extends Application {
 
         //initializes the pixel map, and throws a RuntimeException if the initialization fails
         if(!initPixelMap()) throw new RuntimeException("Pixel Map initialization failed.");
-        //if(!initPixelMap()) throw new RuntimeException("Initialization of the pixelMap failed.");
 
         pixelMap.forEach((point, color) -> pixelWriter.setColor(point.x, point.y, color));
 
