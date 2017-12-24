@@ -54,8 +54,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    //TODO: check if this can become UnaryOperator
-    static Function<Point<Integer>, Point<Double>> coordinateMapper = point -> new Point<Double>(
+    static Function<Point<Integer>, Point<Double>> coordinateMapper = point -> new Point<>(
 
             (point.x - (2d/3)*width)*3/width,
             (point.y - (1d/2)*(height))*-2/height
