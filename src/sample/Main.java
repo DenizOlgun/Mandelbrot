@@ -11,12 +11,44 @@ import javafx.scene.image.WritableImage;
 
 import static java.lang.Math.*;
 
+import java.util.*;
 import java.util.function.*;
 
 public class Main extends Application {
 
     static double width;
     static double height;
+
+    public static Map<Point<Integer>, Color> pixelMap = new HashMap<>((int)(width*height));
+
+    //returns whether the initialization was successful
+    public static boolean initPixelMap() {
+
+        try {
+
+            for (int x = 0; x < width; x++) {
+
+                for (int y = 0; y < height; y++) {
+
+                    pixelMap.put(
+                            new Point<>(x, y),
+                            getColor(Color.BLACK,
+                                    mandelbrot.apply(coordinateMapper.apply(new Point<>(x, y))),
+                                    (Integer iterations) -> iterations == 0,
+                                    (Integer iterations) -> new Color(((double) iterations / MAX_ITERATIONS), 0, (double) iterations / MAX_ITERATIONS, 0.75),
+                                    (Color c) -> new Color(pow(c.getRed(), 100d / MAX_ITERATIONS), c.getGreen(), pow(c.getBlue(), 100d / MAX_ITERATIONS), c.getOpacity())));
+                    //TODO: create a postprocessor that scales with the MAX_ITERATIONS, rather than washing out the colors as it increases
+                }
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -29,31 +61,23 @@ public class Main extends Application {
         width = wImage.getWidth();
         height = wImage.getHeight();
 
-        //TODO: Change the methodology to use a pixel, and directly output its color.  Store all of these pairs in a Map.  Then, color the WritableImage using this Map.
-        for(int readX=0; readX<wImage.getWidth(); readX++) {
+        //initializes the pixel map, and throws a RuntimeException if the initialization fails
+        if(!initPixelMap()) throw new RuntimeException("Pixel Map initialization failed.");
+        //if(!initPixelMap()) throw new RuntimeException("Initialization of the pixelMap failed.");
 
-            for(int readY=0; readY<wImage.getHeight(); readY++) {
-
-                Point<Double> scaledPoint = coordinateMapper.apply(new Point<>(readX, readY));
-                pixelWriter.setColor(readX, readY,
-                        getColor(Color.BLACK,
-                                mandelbrot.apply(coordinateMapper.apply(new Point<Integer>(readX, readY))),
-                                (Integer iterations) -> iterations == 0,
-                                (Integer iterations) -> new Color(((double) iterations/MAX_ITERATIONS), 0, 0, 0.75),
-                                (Color c) -> new Color(c.getRed(), c.getBlue(), c.getGreen(), c.getOpacity())));
-            }
-        }
+        pixelMap.forEach((point, color) -> pixelWriter.setColor(point.x, point.y, color));
 
         // Display image on screen
         imageView.setImage(wImage);
         StackPane root = new StackPane();
         root.getChildren().add(imageView);
-        Scene scene = new Scene(root, wImage.getWidth(), wImage.getHeight());
+        Scene scene = new Scene(root, width, height);
         primaryStage.setTitle("Mandelbrot Set");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    //maps the coordinates of the WritableImage (1500x1000, with a center at 750, 500), to the Mandelbrot Set's coordinates (3x2, with a center at 2, 1)
     static Function<Point<Integer>, Point<Double>> coordinateMapper = point -> new Point<>(
 
             (point.x - (2d/3)*width)*3/width,
@@ -61,7 +85,7 @@ public class Main extends Application {
     );
 
 
-    static final int MAX_ITERATIONS = 100;
+    static final int MAX_ITERATIONS = 500;
 
     static Function<Point<Double>, Integer> mandelbrot =
     //returns 0 if the given points are within the mandelbrot set
