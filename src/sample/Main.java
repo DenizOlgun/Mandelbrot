@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.image.WritableImage;
 
 import static java.lang.Math.*;
+import static sample.Rectangle.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -19,7 +20,7 @@ public class Main extends Application {
     static double width;
     static double height;
 
-    public static Map<Point<Integer>, Color> pixelMap = new HashMap<>((int)(width*height));
+    public static Map<Point, Color> pixelMap = new HashMap<>((int)(width*height));
 
     //returns whether the initialization was successful
     public static boolean initPixelMap() {
@@ -31,9 +32,9 @@ public class Main extends Application {
                 for (int y = 0; y < height; y++) {
 
                     pixelMap.put(
-                            new Point<>(x, y),
+                            new Point(x, y),
                             getColor(Color.BLACK,
-                                    mandelbrot.apply(coordinateMapper.apply(new Point<>(x, y))),
+                                    mandelbrot.apply(coordinateMapper.apply(new Point(x, y))),
                                     (Integer iterations) -> iterations == 0,
                                     (Integer iterations) -> new Color(((double) iterations / MAX_ITERATIONS), 0, (double) iterations / MAX_ITERATIONS, 0.75),
                                     (Color c) -> new Color(pow(c.getRed(), 100d / MAX_ITERATIONS), c.getGreen(), pow(c.getBlue(), 100d / MAX_ITERATIONS), c.getOpacity())));
@@ -64,7 +65,7 @@ public class Main extends Application {
         //initializes the pixel map, and throws a RuntimeException if the initialization fails
         if(!initPixelMap()) throw new RuntimeException("Pixel Map initialization failed.");
 
-        pixelMap.forEach((point, color) -> pixelWriter.setColor(point.x, point.y, color));
+        pixelMap.forEach((point, color) -> pixelWriter.setColor((int) point.x, (int) point.y, color));
 
         // Display image on screen
         imageView.setImage(wImage);
@@ -77,8 +78,9 @@ public class Main extends Application {
     }
 
     //maps the coordinates of the WritableImage (1500x1000, with a center at 750, 500), to the Mandelbrot Set's coordinates (3x2, with a center at 2, 1)
-    static Function<Point<Integer>, Point<Double>> coordinateMapper = point -> new Point<>(
+    static UnaryOperator<Point> coordinateMapper = point -> new Point(
 
+            //TODO:  replace the lambda expression with getCoordinateMapper, once its implementation is completed
             (point.x - (2d/3)*width)*3/width,
             (point.y - (1d/2)*(height))*-2/height
     );
@@ -86,7 +88,7 @@ public class Main extends Application {
 
     static final int MAX_ITERATIONS = 500;
 
-    static Function<Point<Double>, Integer> mandelbrot =
+    static Function<Point, Integer> mandelbrot =
     //returns 0 if the given points are within the mandelbrot set
     //if not, returns the number of steps required to prove its exclusion
 
@@ -135,6 +137,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+        System.out.println(new Rectangle(new DirectionalPoint(new Point(0d, 0d), Direction.LEFT, Direction.UP),
+                new DirectionalPoint(new Point(5d, 10d), Direction.LEFT, Direction.UP)));
         launch(args);
     }
 }
