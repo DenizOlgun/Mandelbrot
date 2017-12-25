@@ -6,12 +6,12 @@ package sample;
 public class Complex {
 
     public static final Complex ONE;
-    public static final Complex I;
+    public static final Imaginary I;
 
     static {
 
         ONE = new Complex(1);
-        I = new Complex(0,1);
+        I = new Imaginary(1);
     }
 
     private double re;
@@ -19,8 +19,7 @@ public class Complex {
 
     Complex(double re) {
 
-        this.re = re;
-        this.im = 0;
+        this(re, 0);
     }
 
     Complex(double re, double im) {
