@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.image.WritableImage;
 
 import static java.lang.Math.*;
-import static sample.Rectangle.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -137,8 +136,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        System.out.println(new Rectangle(new DirectionalPoint(new Point(0d, 0d), Direction.LEFT, Direction.UP),
-                new DirectionalPoint(new Point(5d, 10d), Direction.LEFT, Direction.UP)));
+        System.out.println(new Rectangle(new DirectionalPoint(new Point(0d, 0d), DirectionalPoint.Direction.LEFT, DirectionalPoint.Direction.UP),
+                new DirectionalPoint(new Point(5d, 10d), DirectionalPoint.Direction.LEFT, DirectionalPoint.Direction.UP)));
         launch(args);
     }
 }
