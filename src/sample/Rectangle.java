@@ -60,7 +60,7 @@ public class Rectangle {
     static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
 
         if (!d1.directionallyEquals(d2))
-            throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared" + d1 + "\n" + d2);
+            throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared");
         return (int) Math.signum(d1.getX_INC() == DirectionalPoint.Direction.LEFT ? d2.getLocation().getX() - d1.getLocation().getX() : d1.getLocation().getX() - d2.getLocation().getX());
     };
 
@@ -68,7 +68,7 @@ public class Rectangle {
 
         if (!d1.directionallyEquals(d2))
             throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared");
-        return (int) Math.signum(d1.getY_INC() == DirectionalPoint.Direction.DOWN ? d2.getLocation().getY() - d1.getLocation().getY() : d1.getLocation().getX() - d2.getLocation().getY());
+        return (int) Math.signum(d1.getY_INC() == DirectionalPoint.Direction.DOWN ? d2.getLocation().getY() - d1.getLocation().getY() : d1.getLocation().getY() - d2.getLocation().getY());
     };
 
     //getters
