@@ -64,7 +64,7 @@ public class Main extends Application {
         //initializes the pixel map, and throws a RuntimeException if the initialization fails
         if(!initPixelMap()) throw new RuntimeException("Pixel Map initialization failed.");
 
-        pixelMap.forEach((point, color) -> pixelWriter.setColor((int) point.x, (int) point.y, color));
+        pixelMap.forEach((point, color) -> pixelWriter.setColor((int) point.getX(), (int) point.getY(), color));
 
         // Display image on screen
         imageView.setImage(wImage);
@@ -80,8 +80,8 @@ public class Main extends Application {
     static UnaryOperator<Point> coordinateMapper = point -> new Point(
 
             //TODO:  replace the lambda expression with getCoordinateMapper, once its implementation is completed
-            (point.x - (2d/3)*width)*3/width,
-            (point.y - (1d/2)*(height))*-2/height
+            (point.getX() - (2d/3)*width)*3/width,
+            (point.getY() - (1d/2)*(height))*-2/height
     );
 
 
@@ -96,7 +96,7 @@ public class Main extends Application {
         //and checks if this Complex lies withing the mandelbrot set
     {
 
-        Complex c = new Complex(point.x, point.y);
+        Complex c = new Complex(point.getX(), point.getY());
         Complex determinant = new Complex(0, 0 );
         //Tests with the classic mandelbrot conditions, that iterating det^2 + c -> det does not diverge,
         //the process ends if c takes more than MAX_ITERATIONS iterations to be proven divergent

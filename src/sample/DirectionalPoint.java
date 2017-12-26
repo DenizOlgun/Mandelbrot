@@ -6,11 +6,11 @@ package sample;
 public class DirectionalPoint {
 //DirectionalPoint represents a location in 2D space, with directional heading
 
-    final Point location;
+    private Point location;
 
     //The directions in which the X and Y values increase, respectively
-    final Direction X_INC;
-    final Direction Y_INC;
+    private Direction X_INC;
+    private Direction Y_INC;
 
     DirectionalPoint(Point location) {
 
@@ -26,6 +26,7 @@ public class DirectionalPoint {
 
         this.X_INC = X_INC;
         this.Y_INC = Y_INC;
+
     }
 
     public DirectionalPoint(Point newLocation, DirectionalPoint d) {
@@ -34,6 +35,23 @@ public class DirectionalPoint {
         this.X_INC = d.X_INC;
         this.Y_INC = d.Y_INC;
     }
+
+    //getters
+    public Point getLocation() {
+
+        return location;
+    }
+
+    public Direction getX_INC() {
+
+        return X_INC;
+    }
+
+    public Direction getY_INC() {
+
+        return Y_INC;
+    }
+
 
     //Two DirectionalPoints are directionally equal iff their X_INC and Y_INC are equivalent
     public boolean directionallyEquals(DirectionalPoint d) {
@@ -44,13 +62,13 @@ public class DirectionalPoint {
     //Two Points are horizontally equal iff they both exist on one horizontal line
     public boolean horizontallyEquals(DirectionalPoint d) {
 
-        return this.location.y == d.location.y;
+        return this.location.getY() == d.location.getY();
     }
 
     //Two Points are vertiacally equal iff they both exist on one vertical line
     public boolean verticallyEquals(DirectionalPoint d) {
 
-        return this.location.x == d.location.x;
+        return this.location.getX() == d.location.getX();
     }
 
     //Two Points are locationally equal iff they both exist in the same location
@@ -62,7 +80,7 @@ public class DirectionalPoint {
     //reflects this over the reflector (i.e. returns the point which is collinear and equidistant from this and the reflector)
     public DirectionalPoint reflect(Point reflector) {
 //TODO:  test that reflect works as desired, also in Point
-        return new DirectionalPoint(new Point(2*reflector.x - this.location.x, 2*reflector.y - this.location.y), this);
+        return new DirectionalPoint(new Point(2*reflector.getX() - this.location.getX(), 2*reflector.getY() - this.location.getY()), this);
     }
 
     public String toString() {

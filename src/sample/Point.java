@@ -6,13 +6,24 @@ package sample;
 public class Point {
 //Point represents a location in 2D space, without any directional heading
 
-    final double x;
-    final double y;
+    private double x;
+    private double y;
 
     Point(double x, double y) {
 
         this.x = x;
         this.y = y;
+    }
+
+    //getters
+    public double getX() {
+
+        return x;
+    }
+
+    public double getY() {
+
+        return y;
     }
 
     //reflects this over the reflector (i.e. returns the point which is collinear and equidistant from this and the reflector)

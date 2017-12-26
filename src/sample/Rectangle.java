@@ -10,18 +10,18 @@ public class Rectangle {
     //Rectangle is a bounding rectangle with a center.  The Rectangle is bounded by two points:  the superior and the inferior corners
 
     //the Rectangle corner with maximized x and y values
-    DirectionalPoint superiorCorner;
+    private DirectionalPoint superiorCorner;
 
     //the Rectangle corner with minimized x and y values
-    DirectionalPoint inferiorCorner;
+    private DirectionalPoint inferiorCorner;
 
     //the coordinate center of the Rectangle, which is not necessarily at the Rectangle's center of mass.
-    Point center;
+    private Point center;
 
     //if no center is provided, it defaults to the center of mass of the rectangle.
     public Rectangle(DirectionalPoint firstCorner, DirectionalPoint secondCorner) {
 
-        this(firstCorner, secondCorner, new Point((firstCorner.location.x + secondCorner.location.x) / 2d, (firstCorner.location.y + secondCorner.location.y) / 2d));
+        this(firstCorner, secondCorner, new Point((firstCorner.getLocation().getX() + secondCorner.getLocation().getX()) / 2d, (firstCorner.getLocation().getY() + secondCorner.getLocation().getY()) / 2d));
     }
 
     //TODO:  more rigorous testing, to ensure that the constructor works as intended.
@@ -35,10 +35,10 @@ public class Rectangle {
            !(compareHorizontal.compare(secondCorner, firstCorner) > 0) && compareVertical.compare(secondCorner, firstCorner) > 0) {
 
             //stores the firstCorner's location for secondCorner's constructor.
-            double temp = firstCorner.location.y;
+            double temp = firstCorner.getLocation().getY();
 
-            firstCorner = new DirectionalPoint(new Point(firstCorner.location.x, secondCorner.location.y), firstCorner);
-            secondCorner = new DirectionalPoint(new Point(secondCorner.location.x, temp), secondCorner);
+            firstCorner = new DirectionalPoint(new Point(firstCorner.getLocation().getX(), secondCorner.getLocation().getY()), firstCorner);
+            secondCorner = new DirectionalPoint(new Point(secondCorner.getLocation().getX(), temp), secondCorner);
         }
 
         this.superiorCorner = compareHorizontal.compare(firstCorner, secondCorner) > 0 ? firstCorner : secondCorner;
@@ -49,27 +49,43 @@ public class Rectangle {
 
     public double horizontalLength() {
 
-        return superiorCorner.location.x - inferiorCorner.location.x;
+        return superiorCorner.getLocation().getX() - inferiorCorner.getLocation().getX();
     }
 
     public double verticalLength() {
 
-        return superiorCorner.location.y - inferiorCorner.location.y;
+        return superiorCorner.getLocation().getY() - inferiorCorner.getLocation().getY();
     }
 
     static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
 
         if (!d1.directionallyEquals(d2))
             throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared" + d1 + "\n" + d2);
-        return (int) Math.signum(d1.X_INC == DirectionalPoint.Direction.LEFT ? d2.location.x - d1.location.x : d1.location.x - d2.location.x);
+        return (int) Math.signum(d1.getX_INC() == DirectionalPoint.Direction.LEFT ? d2.getLocation().getX() - d1.getLocation().getX() : d1.getLocation().getX() - d2.getLocation().getX());
     };
 
     static Comparator<DirectionalPoint> compareVertical = (d1, d2) -> {
 
         if (!d1.directionallyEquals(d2))
             throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared");
-        return (int) Math.signum(d1.Y_INC == DirectionalPoint.Direction.DOWN ? d2.location.y - d1.location.y : d1.location.x - d2.location.y);
+        return (int) Math.signum(d1.getY_INC() == DirectionalPoint.Direction.DOWN ? d2.getLocation().getY() - d1.getLocation().getY() : d1.getLocation().getX() - d2.getLocation().getY());
     };
+
+    //getters
+    public DirectionalPoint getSuperiorCorner() {
+
+        return superiorCorner;
+    }
+
+    public DirectionalPoint getInferiorCorner() {
+
+        return inferiorCorner;
+    }
+
+    public Point getCenter() {
+
+        return center;
+    }
 
     //returns an UnaryOperator that maps Points from this to r, respecting directions
     public UnaryOperator<Point> getCoordinateMapper(Rectangle r) {
