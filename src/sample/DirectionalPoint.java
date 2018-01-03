@@ -1,5 +1,10 @@
 package sample;
 
+import java.util.Comparator;
+
+import static java.util.Comparator.*;
+import static sample.DirectionalPoint.Direction.*;
+
 /**
  * Created by Pat111 on 12/24/2017.
  */
@@ -42,6 +47,16 @@ public class DirectionalPoint {
         return location;
     }
 
+    public double getX() {
+
+        return location.getX();
+    }
+
+    public double getY() {
+
+        return location.getY();
+    }
+
     public Direction getX_INC() {
 
         return X_INC;
@@ -82,6 +97,24 @@ public class DirectionalPoint {
 //TODO:  test that reflect works as desired, also in Point
         return new DirectionalPoint(new Point(2*reflector.getX() - this.location.getX(), 2*reflector.getY() - this.location.getY()), this);
     }
+
+    static Comparator<DirectionalPoint> compareLeft = comparing(DirectionalPoint::getX, reverseOrder());
+    static Comparator<DirectionalPoint> compareRight = comparing(DirectionalPoint::getX, naturalOrder());
+
+    static Comparator<DirectionalPoint> compareDown = comparing(DirectionalPoint::getY, reverseOrder());
+    static Comparator<DirectionalPoint> compareUp = comparing(DirectionalPoint::getY, naturalOrder());
+
+    static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
+
+        assert d1.directionallyEquals(d2) : "The points are not directionally equal";
+        return d1.getX_INC() == LEFT ? compareLeft.compare(d1,d2) :  compareRight.compare(d1,d2);
+    };
+
+    static Comparator<DirectionalPoint> compareVertical = (d1, d2) -> {
+
+        assert d1.directionallyEquals(d2) : "The points are not directionally equal";
+        return d1.getY_INC() == DOWN ? compareDown.compare(d1, d2) : compareUp.compare(d1, d2);
+    };
 
     public String toString() {
 

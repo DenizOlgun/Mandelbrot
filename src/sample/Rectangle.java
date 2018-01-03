@@ -1,7 +1,8 @@
 package sample;
 
-import java.util.Comparator;
 import java.util.function.UnaryOperator;
+
+import static sample.DirectionalPoint.*;
 
 /**
  * Created by Pat111 on 12/24/2017.
@@ -21,7 +22,7 @@ public class Rectangle {
     //if no center is provided, it defaults to the center of mass of the rectangle.
     public Rectangle(DirectionalPoint firstCorner, DirectionalPoint secondCorner) {
 
-        this(firstCorner, secondCorner, new Point((firstCorner.getLocation().getX() + secondCorner.getLocation().getX()) / 2d, (firstCorner.getLocation().getY() + secondCorner.getLocation().getY()) / 2d));
+        this(firstCorner, secondCorner, new Point((firstCorner.getX() + secondCorner.getX()) / 2d, (firstCorner.getY() + secondCorner.getY()) / 2d));
     }
 
     //TODO:  more rigorous testing, to ensure that the constructor works as intended.
@@ -35,10 +36,10 @@ public class Rectangle {
            !(compareHorizontal.compare(secondCorner, firstCorner) > 0) && compareVertical.compare(secondCorner, firstCorner) > 0) {
 
             //stores the firstCorner's location for secondCorner's constructor.
-            double temp = firstCorner.getLocation().getY();
+            double temp = firstCorner.getY();
 
-            firstCorner = new DirectionalPoint(new Point(firstCorner.getLocation().getX(), secondCorner.getLocation().getY()), firstCorner);
-            secondCorner = new DirectionalPoint(new Point(secondCorner.getLocation().getX(), temp), secondCorner);
+            firstCorner = new DirectionalPoint(new Point(firstCorner.getX(), secondCorner.getY()), firstCorner);
+            secondCorner = new DirectionalPoint(new Point(secondCorner.getX(), temp), secondCorner);
         }
 
         this.superiorCorner = compareHorizontal.compare(firstCorner, secondCorner) > 0 ? firstCorner : secondCorner;
@@ -49,27 +50,13 @@ public class Rectangle {
 
     public double horizontalLength() {
 
-        return superiorCorner.getLocation().getX() - inferiorCorner.getLocation().getX();
+        return superiorCorner.getX() - inferiorCorner.getX();
     }
 
     public double verticalLength() {
 
-        return superiorCorner.getLocation().getY() - inferiorCorner.getLocation().getY();
+        return superiorCorner.getY() - inferiorCorner.getY();
     }
-
-    static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
-
-        if (!d1.directionallyEquals(d2))
-            throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared");
-        return (int) Math.signum(d1.getX_INC() == DirectionalPoint.Direction.LEFT ? d2.getLocation().getX() - d1.getLocation().getX() : d1.getLocation().getX() - d2.getLocation().getX());
-    };
-
-    static Comparator<DirectionalPoint> compareVertical = (d1, d2) -> {
-
-        if (!d1.directionallyEquals(d2))
-            throw new IllegalArgumentException("The arguments are not directionally equal; they can't be compared");
-        return (int) Math.signum(d1.getY_INC() == DirectionalPoint.Direction.DOWN ? d2.getLocation().getY() - d1.getLocation().getY() : d1.getLocation().getY() - d2.getLocation().getY());
-    };
 
     //getters
     public DirectionalPoint getSuperiorCorner() {
