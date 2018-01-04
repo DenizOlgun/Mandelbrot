@@ -93,12 +93,12 @@ public class Rectangle {
             if(!superiorCorner.getY_INC().equals(r.superiorCorner.getY_INC())) p.reflectY(this.trueCenter());
 
             //accounting for differences in dimensions
-            p.setX((p.getX() - center.getX()) * r.horizontalLength()/horizontalLength());
-            p.setY((p.getY() - center.getY()) * r.verticalLength()/verticalLength());
+            p = p.setX((p.getX() - center.getX()) * r.horizontalLength()/horizontalLength());
+            p = p.setY((p.getY() - center.getY()) * r.verticalLength()/verticalLength());
 
             //accounting for offsets of the center
-            p.setX((p.getX() - r.center.getX()));
-            p.setY((p.getY() - r.center.getY()));
+            p = p.setX((p.getX() - r.center.getX()));
+            p = p.setY((p.getY() - r.center.getY()));
 
             return p;
         };

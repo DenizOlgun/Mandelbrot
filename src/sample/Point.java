@@ -27,33 +27,35 @@ public class Point {
     }
 
     //setters
-    public void setX(double x) {
+    public Point setX(double x) {
 
-        this.x = x;
+        return new Point(x, this.y);
     }
 
-    public void setY(double y) {
+    public Point setY(double y) {
 
-        this.y = y;
+        return new Point(this.x, y);
     }
 
     //reflects this over the reflector, considering only the x coordinate
-    public void reflectX(Point reflector) {
+    public Point reflectX(Point reflector) {
 
-        this.setX(2*reflector.x - x);
+        return new Point(2*reflector.x - x, this.y);
     }
 
     //reflects this over the reflector, considering only the y coordinate
-    public void reflectY(Point reflector) {
+    public Point reflectY(Point reflector) {
 
-        this.setY(2*reflector.y - y);
+        return new Point(this.x, 2*reflector.y - y);
     }
 
     //reflects this over the reflector (i.e. returns the point which is collinear and equidistant from this and the reflector)
-    public void reflect(Point reflector) {
+    public Point reflect(Point reflector) {
 
-        this.setX(2*reflector.x - x);
-        this.setY(2*reflector.y - y);
+        return new Point(
+                2*reflector.x - x,
+                2*reflector.y - y
+        );
     }
 
     @Override
