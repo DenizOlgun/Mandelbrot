@@ -34,7 +34,7 @@ public class DirectionalPoint {
 
     }
 
-    public DirectionalPoint(Point newLocation, DirectionalPoint d) {
+    DirectionalPoint(Point newLocation, DirectionalPoint d) {
 
         this.location = newLocation;
         this.X_INC = d.X_INC;
@@ -67,47 +67,21 @@ public class DirectionalPoint {
         return Y_INC;
     }
 
-
     //Two DirectionalPoints are directionally equal iff their X_INC and Y_INC are equivalent
     public boolean directionallyEquals(DirectionalPoint d) {
 
-        return this.X_INC == d.X_INC && this.Y_INC == d.Y_INC;
-    }
-
-    //Two Points are horizontally equal iff they both exist on one horizontal line
-    public boolean horizontallyEquals(DirectionalPoint d) {
-
-        return this.location.getY() == d.location.getY();
-    }
-
-    //Two Points are vertiacally equal iff they both exist on one vertical line
-    public boolean verticallyEquals(DirectionalPoint d) {
-
-        return this.location.getX() == d.location.getX();
-    }
-
-    //Two Points are locationally equal iff they both exist in the same location
-    public boolean locationallyEquals(DirectionalPoint d) {
-
-        return this.location.equals(d.location);
-    }
-
-    //reflects this over the reflector (i.e. returns the point which is collinear and equidistant from this and the reflector)
-    public DirectionalPoint reflect(Point reflector) {
-//TODO:  test that reflect works as desired, also in Point
-        return new DirectionalPoint(new Point(2*reflector.getX() - this.location.getX(), 2*reflector.getY() - this.location.getY()), this);
+        return X_INC == d.X_INC && Y_INC == d.Y_INC;
     }
 
     static Comparator<DirectionalPoint> compareLeft = comparing(DirectionalPoint::getX, reverseOrder());
     static Comparator<DirectionalPoint> compareRight = comparing(DirectionalPoint::getX, naturalOrder());
-
     static Comparator<DirectionalPoint> compareDown = comparing(DirectionalPoint::getY, reverseOrder());
     static Comparator<DirectionalPoint> compareUp = comparing(DirectionalPoint::getY, naturalOrder());
 
     static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
 
         assert d1.directionallyEquals(d2) : "The points are not directionally equal";
-        return d1.getX_INC() == LEFT ? compareLeft.compare(d1,d2) :  compareRight.compare(d1,d2);
+        return d1.getX_INC() == LEFT ? compareLeft.compare(d1, d2) : compareRight.compare(d1, d2);
     };
 
     static Comparator<DirectionalPoint> compareVertical = (d1, d2) -> {
