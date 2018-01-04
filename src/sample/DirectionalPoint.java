@@ -8,7 +8,7 @@ import static sample.DirectionalPoint.Direction.*;
 /**
  * Created by Pat111 on 12/24/2017.
  */
-public class DirectionalPoint {
+public class DirectionalPoint extends Point {
 //DirectionalPoint represents a location in 2D space, with directional heading
 
     private Point location;
@@ -24,7 +24,7 @@ public class DirectionalPoint {
 
     DirectionalPoint(Point location, Direction X_INC, Direction Y_INC) {
 
-        this.location = location;
+        super(location.getX(), location.getY());
 
         if(X_INC == Direction.DOWN || X_INC == Direction.UP) throw new IllegalArgumentException("The X axis is horizontal; it may not increase in the downwards or upwards directions.");
         if(Y_INC == Direction.LEFT || Y_INC == Direction.RIGHT) throw new IllegalArgumentException("The Y axis is vertical; it may not increase in the leftwards or rightwards directions.");
@@ -36,7 +36,8 @@ public class DirectionalPoint {
 
     DirectionalPoint(Point newLocation, DirectionalPoint d) {
 
-        this.location = newLocation;
+        super(newLocation.getX(), newLocation.getY());
+
         this.X_INC = d.X_INC;
         this.Y_INC = d.Y_INC;
     }
@@ -45,16 +46,6 @@ public class DirectionalPoint {
     public Point getLocation() {
 
         return location;
-    }
-
-    public double getX() {
-
-        return location.getX();
-    }
-
-    public double getY() {
-
-        return location.getY();
     }
 
     public Direction getX_INC() {
@@ -73,10 +64,10 @@ public class DirectionalPoint {
         return X_INC == d.X_INC && Y_INC == d.Y_INC;
     }
 
-    static Comparator<DirectionalPoint> compareLeft = comparing(DirectionalPoint::getX, reverseOrder());
-    static Comparator<DirectionalPoint> compareRight = comparing(DirectionalPoint::getX, naturalOrder());
-    static Comparator<DirectionalPoint> compareDown = comparing(DirectionalPoint::getY, reverseOrder());
-    static Comparator<DirectionalPoint> compareUp = comparing(DirectionalPoint::getY, naturalOrder());
+    private static Comparator<DirectionalPoint> compareLeft = comparing(DirectionalPoint::getX, reverseOrder());
+    private static Comparator<DirectionalPoint> compareRight = comparing(DirectionalPoint::getX, naturalOrder());
+    private static Comparator<DirectionalPoint> compareDown = comparing(DirectionalPoint::getY, reverseOrder());
+    private static Comparator<DirectionalPoint> compareUp = comparing(DirectionalPoint::getY, naturalOrder());
 
     static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
 
