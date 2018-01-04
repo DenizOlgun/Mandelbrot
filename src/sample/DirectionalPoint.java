@@ -11,8 +11,6 @@ import static sample.DirectionalPoint.Direction.*;
 public class DirectionalPoint extends Point {
 //DirectionalPoint represents a location in 2D space, with directional heading
 
-    private Point location;
-
     //The directions in which the X and Y values increase, respectively
     private Direction X_INC;
     private Direction Y_INC;
@@ -45,7 +43,7 @@ public class DirectionalPoint extends Point {
     //getters
     public Point getLocation() {
 
-        return location;
+        return new Point(super.getX(), super.getY());
     }
 
     public Direction getX_INC() {
@@ -69,21 +67,23 @@ public class DirectionalPoint extends Point {
     private static Comparator<DirectionalPoint> compareDown = comparing(DirectionalPoint::getY, reverseOrder());
     private static Comparator<DirectionalPoint> compareUp = comparing(DirectionalPoint::getY, naturalOrder());
 
-    static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
+
+    public static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
 
         assert d1.directionallyEquals(d2) : "The points are not directionally equal";
         return d1.getX_INC() == LEFT ? compareLeft.compare(d1, d2) : compareRight.compare(d1, d2);
     };
 
-    static Comparator<DirectionalPoint> compareVertical = (d1, d2) -> {
+    public static Comparator<DirectionalPoint> compareVertical = (d1, d2) -> {
 
         assert d1.directionallyEquals(d2) : "The points are not directionally equal";
         return d1.getY_INC() == DOWN ? compareDown.compare(d1, d2) : compareUp.compare(d1, d2);
     };
 
+    @Override
     public String toString() {
 
-        return "Location: " + location + "\n" +
+        return "Location: " + new Point(getX(), getY()) + "\n" + //FIXME: use superclass constructor
                 "X_INC: " + X_INC + "\n" +
                 "Y_INC: " + Y_INC;
     }
@@ -95,6 +95,7 @@ public class DirectionalPoint extends Point {
         DOWN,
         UP;
 
+        @Override
         public String toString() {
 
             switch(this) {
