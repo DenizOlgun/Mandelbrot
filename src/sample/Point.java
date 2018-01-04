@@ -1,5 +1,8 @@
 package sample;
 
+import java.util.Comparator;
+import static java.util.Comparator.*;
+
 /**
  * Created by Pat111 on 12/23/2017.
  */
@@ -57,6 +60,9 @@ public class Point {
                 2*reflector.y - y
         );
     }
+
+    public static Comparator<Point> compareHorizontal = comparing(Point::getX);
+    public static Comparator<Point> compareVertical = comparing(Point::getY);
 
     @Override
     public String toString() {
