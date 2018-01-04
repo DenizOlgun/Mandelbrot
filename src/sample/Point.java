@@ -26,10 +26,34 @@ public class Point {
         return y;
     }
 
+    //setters
+    public void setX(double x) {
+
+        this.x = x;
+    }
+
+    public void setY(double y) {
+
+        this.y = y;
+    }
+
+    //reflects this over the reflector, considering only the x coordinate
+    public void reflectX(Point reflector) {
+
+        this.setX(2*reflector.x - x);
+    }
+
+    //reflects this over the reflector, considering only the y coordinate
+    public void reflectY(Point reflector) {
+
+        this.setY(2*reflector.y - y);
+    }
+
     //reflects this over the reflector (i.e. returns the point which is collinear and equidistant from this and the reflector)
-    public Point reflect(Point reflector) {
-//TODO:  test that reflect works as desired, also in DirectionalPoint
-        return new Point(2*reflector.x - this.x, 2*reflector.y - this.y);
+    public void reflect(Point reflector) {
+
+        this.setX(2*reflector.x - x);
+        this.setY(2*reflector.y - y);
     }
 
     @Override
