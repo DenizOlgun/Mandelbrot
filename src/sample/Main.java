@@ -9,6 +9,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 import javafx.scene.image.WritableImage;
 
+import static sample.DirectionalPoint.Direction.*;
 import static java.lang.Math.*;
 
 import java.util.*;
@@ -64,6 +65,7 @@ public class Main extends Application {
         //initializes the pixel map, and throws a RuntimeException if the initialization fails
         if(!initPixelMap()) throw new RuntimeException("Pixel Map initialization failed.");
 
+        //writes the pixelMap's contents to the wImage
         pixelMap.forEach((point, color) -> pixelWriter.setColor((int) point.getX(), (int) point.getY(), color));
 
         // Display image on screen
@@ -77,14 +79,18 @@ public class Main extends Application {
     }
 
     //maps the coordinates of the WritableImage (1500x1000, with a center at 750, 500), to the Mandelbrot Set's coordinates (3x2, with a center at 2, 1)
-    static UnaryOperator<Point> coordinateMapper = point -> new Point(
+    /*static UnaryOperator<Point> coordinateMapper = point -> new Point(
 
             //TODO:  replace the lambda expression with getCoordinateMapper, once its implementation is completed
             (point.getX() - (2d/3)*width)*3/width,
             (point.getY() - (1d/2)*(height))*-2/height
     );
+*/
 
+    static Rectangle window = new Rectangle(new DirectionalPoint(new Point(0, 0), RIGHT, DOWN), new DirectionalPoint(new Point(1500, 1000), RIGHT, DOWN), new Point(0, 0));
+    static Rectangle mandelbrotRectangle = new Rectangle(new DirectionalPoint(new Point(0, 0)), new DirectionalPoint(new Point(3, 2)), new Point(2,1));
 
+    static UnaryOperator<Point> coordinateMapper = window.scale(mandelbrotRectangle);
     static final int MAX_ITERATIONS = 500;
 
     static Function<Point, Integer> mandelbrot =
@@ -136,8 +142,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        System.out.println(new Rectangle(new DirectionalPoint(new Point(0d, 0d), DirectionalPoint.Direction.LEFT, DirectionalPoint.Direction.UP),
-                new DirectionalPoint(new Point(5d, 10d), DirectionalPoint.Direction.LEFT, DirectionalPoint.Direction.UP)));
         launch(args);
     }
 }
