@@ -104,9 +104,10 @@ public class Rectangle {
         };
     }
 
+    @Override
     public String toString() {
 
         return "Superior Corner: " + superiorCorner + "\n" +
-                "Inferior Corner: " + inferiorCorner + "\n";
+               "Inferior Corner: " + inferiorCorner + "\n";
     }
 }
