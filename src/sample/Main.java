@@ -1,6 +1,7 @@
 package sample;
 
 import Geometry.DirectionalPoint;
+import Geometry.Heading;
 import Geometry.Point;
 import Geometry.Rectangle;
 import javafx.application.Application;
@@ -92,7 +93,7 @@ public class Main extends Application {
     );
 */
 
-    static Rectangle window = new Rectangle(new DirectionalPoint(new Point(0, 0), RIGHT, DOWN), new DirectionalPoint(new Point(1500, 1000), RIGHT, DOWN), new Point(0, 0));
+    static Rectangle window = new Rectangle(new DirectionalPoint(new Point(0, 0), new Heading(RIGHT, DOWN)), new DirectionalPoint(new Point(1500, 1000), new Heading(RIGHT, DOWN)), new Point(0, 0));
     static Rectangle mandelbrotRectangle = new Rectangle(new DirectionalPoint(new Point(0, 0)), new DirectionalPoint(new Point(3, 2)), new Point(2,1));
 
     static UnaryOperator<Point> coordinateMapper = window.scale(mandelbrotRectangle);

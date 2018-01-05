@@ -3,6 +3,7 @@ package Geometry;
 import java.util.Comparator;
 
 import static java.util.Comparator.*;
+
 import static Geometry.DirectionalPoint.Direction.*;
 
 /**
@@ -12,32 +13,28 @@ public class DirectionalPoint extends Point {
 //DirectionalPoint represents a location in 2D space, with directional heading
 
     //The directions in which the X and Y values increase, respectively
-    private Direction X_INC;
-    private Direction Y_INC;
+    private Heading heading;
 
     public DirectionalPoint(Point location) {
 
-        this(location, Direction.RIGHT, Direction.UP);
+        this(location, new Heading(RIGHT, UP));
     }
 
-    public DirectionalPoint(Point location, Direction X_INC, Direction Y_INC) {
+    public DirectionalPoint(Point location, Heading heading) {
 
         super(location.getX(), location.getY());
 
-        if(X_INC == Direction.DOWN || X_INC == Direction.UP) throw new IllegalArgumentException("The X axis is horizontal; it may not increase in the downwards or upwards directions.");
-        if(Y_INC == Direction.LEFT || Y_INC == Direction.RIGHT) throw new IllegalArgumentException("The Y axis is vertical; it may not increase in the leftwards or rightwards directions.");
+        if(heading.getX_INC() == Direction.DOWN || heading.getX_INC() == Direction.UP) throw new IllegalArgumentException("The X axis is horizontal; it may not increase in the downwards or upwards directions.");
+        if(heading.getY_INC() == Direction.LEFT || heading.getY_INC() == Direction.RIGHT) throw new IllegalArgumentException("The Y axis is vertical; it may not increase in the leftwards or rightwards directions.");
 
-        this.X_INC = X_INC;
-        this.Y_INC = Y_INC;
-
+        this.heading = heading;
     }
 
     DirectionalPoint(Point newLocation, DirectionalPoint d) {
 
         super(newLocation.getX(), newLocation.getY());
 
-        this.X_INC = d.X_INC;
-        this.Y_INC = d.Y_INC;
+        this.heading = d.heading;
     }
 
     //getters
@@ -48,25 +45,24 @@ public class DirectionalPoint extends Point {
 
     public Direction getX_INC() {
 
-        return X_INC;
+        return heading.getX_INC();
     }
 
     public Direction getY_INC() {
 
-        return Y_INC;
+        return heading.getY_INC();
     }
 
-    //Two DirectionalPoints are directionally equal iff their X_INC and Y_INC are equivalent
+    //Two DirectionalPoints are directionally equal iff their getX_INC() and heading.getY_INC are equivalent
     public boolean directionallyEquals(DirectionalPoint d) {
 
-        return X_INC == d.X_INC && Y_INC == d.Y_INC;
+        return heading.equals(d.heading);
     }
 
     private static Comparator<DirectionalPoint> compareLeft = comparing(DirectionalPoint::getX, reverseOrder());
     private static Comparator<DirectionalPoint> compareRight = comparing(DirectionalPoint::getX, naturalOrder());
     private static Comparator<DirectionalPoint> compareDown = comparing(DirectionalPoint::getY, reverseOrder());
     private static Comparator<DirectionalPoint> compareUp = comparing(DirectionalPoint::getY, naturalOrder());
-
 
     public static Comparator<DirectionalPoint> compareHorizontal = (d1, d2) -> {
 
@@ -83,9 +79,9 @@ public class DirectionalPoint extends Point {
     @Override
     public String toString() {
 
-        return "Location: " + new Point(getX(), getY()) + "\n" + //FIXME: use superclass constructor
-                "X_INC: " + X_INC + "\n" +
-                "Y_INC: " + Y_INC;
+        return "Location: " + new Point(getX(), getY()) + "\n" +
+               "X_INC(): " + heading.getX_INC() + "\n" +
+               "heading.getY_INC: " + heading.getY_INC();
     }
 
     public enum Direction {
