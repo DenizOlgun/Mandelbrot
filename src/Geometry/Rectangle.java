@@ -1,8 +1,7 @@
-package sample;
+package Geometry;
 
 import java.util.function.*;
 
-import static sample.DirectionalPoint.*;
 import static java.lang.Math.*;
 
 /**
@@ -33,8 +32,8 @@ public class Rectangle {
 
         //if true, then neither the firstCorner nor the secondCorner can be inferior nor superior;  we switch to the other 2-corner pair of the rectangle
         //this branch also checks that the firstCorner and secondCorner are directionally equal
-        if(!(compareHorizontal.compare(firstCorner, secondCorner) > 0 && compareVertical.compare(firstCorner, secondCorner) > 0) ||
-           !(compareHorizontal.compare(secondCorner, firstCorner) > 0) && compareVertical.compare(secondCorner, firstCorner) > 0) {
+        if(!(DirectionalPoint.compareHorizontal.compare(firstCorner, secondCorner) > 0 && DirectionalPoint.compareVertical.compare(firstCorner, secondCorner) > 0) ||
+           !(DirectionalPoint.compareHorizontal.compare(secondCorner, firstCorner) > 0) && DirectionalPoint.compareVertical.compare(secondCorner, firstCorner) > 0) {
 
             //stores the firstCorner's location for secondCorner's constructor.
             double temp = firstCorner.getY();
@@ -43,8 +42,8 @@ public class Rectangle {
             secondCorner = new DirectionalPoint(new Point(secondCorner.getX(), temp), secondCorner);
         }
 
-        this.superiorCorner = compareHorizontal.compare(firstCorner, secondCorner) > 0 ? firstCorner : secondCorner;
-        this.inferiorCorner = compareHorizontal.compare(firstCorner, secondCorner) < 0 ? firstCorner : secondCorner;
+        this.superiorCorner = DirectionalPoint.compareHorizontal.compare(firstCorner, secondCorner) > 0 ? firstCorner : secondCorner;
+        this.inferiorCorner = DirectionalPoint.compareHorizontal.compare(firstCorner, secondCorner) < 0 ? firstCorner : secondCorner;
 
         this.center = center;
     }

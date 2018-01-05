@@ -1,11 +1,11 @@
-package sample;
+package Math;
 
 /**
  * Created by Pat111 on 12/23/2017.
  */
 public class Imaginary extends Complex {
 
-    Imaginary(double im) {
+    public Imaginary(double im) {
 
         super(0, im);
     }

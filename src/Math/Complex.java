@@ -1,4 +1,4 @@
-package sample;
+package Math;
 
 /**
  * Created by Pat111 on 12/23/2017.
@@ -17,25 +17,25 @@ public class Complex {
     private double re;
     private double im;
 
-    Complex(double re) {
+    public Complex(double re) {
 
         this(re, 0);
     }
 
-    Complex(double re, double im) {
+    public Complex(double re, double im) {
 
         this.re = re;
         this.im = im;
     }
 
     //getters
-    double getRe() {return re;}
-    double getIm() {return im;}
+    public double getRe() {return re;}
+    public double getIm() {return im;}
 
     //basic operators
 
     //returns the sum of two Complex, by adding like terms
-    Complex add(Complex c) {
+    public Complex add(Complex c) {
 
         return new Complex(
                 this.re + c.re,
@@ -44,7 +44,7 @@ public class Complex {
     }
 
     //returns the difference of two Complex, by subtracting like terms
-    Complex subtract(Complex c) {
+    public Complex subtract(Complex c) {
 
         return new Complex(
                 this.re - c.re,
@@ -53,7 +53,7 @@ public class Complex {
     }
 
     //returns the product of two Complex, using the Distributive Property
-    Complex multiply(Complex c) {
+    public Complex multiply(Complex c) {
 
         return new Complex(
                 (this.re*c.re - this.im*c.im),
@@ -62,7 +62,7 @@ public class Complex {
     }
 
     //returns the quotient of a Complex and a double, using the Distributive Property
-    Complex divide(double d) {
+    public Complex divide(double d) {
 
         return new Complex(
                 this.re/d,
@@ -71,13 +71,13 @@ public class Complex {
     }
 
     //returns the quotient of two Complex by factoring in the divisor's complex conjugate, then dividing through, using the Distributive Property
-    Complex divide(Complex c) {
+    public Complex divide(Complex c) {
 
         return this.multiply(c.conj()).divide(c.multiply(c.conj()).toDouble());
     }
 
     //returns the absolute value of a Complex by using the Distance Formula (d = sqrt(deltaX^2 + deltaY^2))
-    double abs() {
+    public double abs() {
 
         return Math.sqrt(re*re + im*im);
     }
@@ -85,19 +85,19 @@ public class Complex {
     //convenience operators
 
     //returns the product of a Complex with itself, i.e. the square of that Complex
-    Complex squared() {
+    public Complex squared() {
 
         return this.multiply(this);
     }
 
     //returns the reciprocal of a Complex
-    Complex recip() {
+    public Complex recip() {
 
         return ONE.divide(this);
     }
 
     //returns the Complex conjugate of a Complex
-    Complex conj() {
+    public Complex conj() {
 
         return new Complex(
                 this.re,
@@ -115,8 +115,7 @@ public class Complex {
 
     public int toInt() {
 
-        if(im != 0) throw new IllegalArgumentException("Complex numbers may only be converted to reals if the imaginary part = 0. \nHere, the imaginary value is " + im);
-        else return (int) re;
+        return (int) toDouble();
     }
 
     public Imaginary toImaginary() {

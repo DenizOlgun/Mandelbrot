@@ -1,5 +1,8 @@
 package sample;
 
+import Geometry.DirectionalPoint;
+import Geometry.Point;
+import Geometry.Rectangle;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -9,11 +12,13 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 import javafx.scene.image.WritableImage;
 
-import static sample.DirectionalPoint.Direction.*;
+import static Geometry.DirectionalPoint.Direction.*;
 import static java.lang.Math.*;
 
 import java.util.*;
 import java.util.function.*;
+
+import Math.Complex;
 
 public class Main extends Application {
 

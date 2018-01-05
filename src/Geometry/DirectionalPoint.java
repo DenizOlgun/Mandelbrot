@@ -1,9 +1,9 @@
-package sample;
+package Geometry;
 
 import java.util.Comparator;
 
 import static java.util.Comparator.*;
-import static sample.DirectionalPoint.Direction.*;
+import static Geometry.DirectionalPoint.Direction.*;
 
 /**
  * Created by Pat111 on 12/24/2017.
@@ -15,12 +15,12 @@ public class DirectionalPoint extends Point {
     private Direction X_INC;
     private Direction Y_INC;
 
-    DirectionalPoint(Point location) {
+    public DirectionalPoint(Point location) {
 
         this(location, Direction.RIGHT, Direction.UP);
     }
 
-    DirectionalPoint(Point location, Direction X_INC, Direction Y_INC) {
+    public DirectionalPoint(Point location, Direction X_INC, Direction Y_INC) {
 
         super(location.getX(), location.getY());
 
